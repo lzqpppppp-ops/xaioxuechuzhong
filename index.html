@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>中考通关 · 小学到初中每日学习</title>
+<meta name="description" content="小学到初中的每日学习网页：知识点由易到难、每天一组任务、即时反馈、错题本与间隔复习，按广西中考范围编排，进度保存在本机浏览器。" />
+<meta name="theme-color" content="#FAF7F1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232F6BFF'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23fff' font-family='sans-serif'%3E中%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="assets/css/app.css" />
+<link rel="stylesheet" href="assets/css/auth.css" />
+</head>
+<body>
+  <div id="app" class="app"></div>
+  <div id="modal-root" class="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <div id="fx-root" class="fx-root" aria-hidden="true"></div>
+
+  <noscript>
+    <p style="padding:40px;text-align:center;font-family:sans-serif">这个页面需要浏览器开启 JavaScript 才能使用。</p>
+  </noscript>
+
+  <!-- 应用核心（知识点按科目懒加载，见 parts-loader.js） -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/parts-loader.js"></script>
+  <script src="assets/js/engine.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/viz.js"></script>
+  <script src="assets/js/viz-map.js"></script>
+  <script src="assets/js/hint-map.js"></script>
+  <script src="assets/js/forest.js"></script>
+  <script src="assets/js/view-home.js"></script>
+  <script src="assets/js/view-map.js"></script>
+  <script src="assets/js/view-learn.js"></script>
+  <script src="assets/js/view-forest.js"></script>
+  <script src="assets/js/view-more.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth.js"></script>
+</body>
+</html>
