@@ -546,30 +546,78 @@
     if (!main || !sticky || !stickyEl) return;
     if (main.dataset.stickyBound === "1") return;
     main.dataset.stickyBound = "1";
+    /* 吸顶条只做控制镜像：永远静音，真正出声的只有 main，避免双路回音 */
     stickyEl.src = main.getAttribute("src") || "";
+    stickyEl.muted = true;
+    stickyEl.volume = 0;
     var syncing = false;
-    function syncFrom(a, b) {
+    function syncClock(from, to) {
+      try {
+        if (Math.abs((to.currentTime || 0) - (from.currentTime || 0)) > 0.35) {
+          to.currentTime = from.currentTime || 0;
+        }
+      } catch (err) {}
+    }
+    function showSticky() {
+      sticky.hidden = false;
+      stickyEl.muted = true;
+      stickyEl.volume = 0;
+    }
+    function onMainPlay() {
+      showSticky();
+      syncClock(main, stickyEl);
+      if (stickyEl.paused) {
+        var p = stickyEl.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    }
+    function onMainPause() {
+      syncClock(main, stickyEl);
+      if (!stickyEl.paused) stickyEl.pause();
+    }
+    function onStickyPlay() {
+      showSticky();
+      stickyEl.muted = true;
+      stickyEl.volume = 0;
+      syncClock(stickyEl, main);
+      if (main.paused) {
+        var p = main.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    }
+    function onStickyPause() {
+      syncClock(stickyEl, main);
+      if (!main.paused) main.pause();
+    }
+    main.addEventListener("play", onMainPlay);
+    main.addEventListener("pause", onMainPause);
+    main.addEventListener("seeked", function () { if (!syncing) { syncing = true; syncClock(main, stickyEl); syncing = false; } });
+    stickyEl.addEventListener("play", function () {
       if (syncing) return;
       syncing = true;
-      try {
-        if (Math.abs((b.currentTime || 0) - (a.currentTime || 0)) > 0.4) b.currentTime = a.currentTime || 0;
-        if (!a.paused && b.paused) {
-          var p = b.play();
-          if (p && p.catch) p.catch(function () {});
-        }
-        if (a.paused && !b.paused) b.pause();
-      } catch (err) {}
+      onStickyPlay();
       syncing = false;
-    }
-    main.addEventListener("play", function () {
-      sticky.hidden = false;
-      syncFrom(main, stickyEl);
     });
-    ["pause", "seeked", "timeupdate"].forEach(function (ev) {
-      main.addEventListener(ev, function () { syncFrom(main, stickyEl); });
-      stickyEl.addEventListener(ev, function () { syncFrom(stickyEl, main); });
+    stickyEl.addEventListener("pause", function () {
+      if (syncing) return;
+      syncing = true;
+      onStickyPause();
+      syncing = false;
     });
-    stickyEl.addEventListener("play", function () { syncFrom(stickyEl, main); });
+    stickyEl.addEventListener("seeked", function () {
+      if (syncing) return;
+      syncing = true;
+      syncClock(stickyEl, main);
+      syncing = false;
+    });
+    main.addEventListener("timeupdate", function () {
+      if (syncing || sticky.hidden) return;
+      if (Math.abs((stickyEl.currentTime || 0) - (main.currentTime || 0)) > 0.75) {
+        syncing = true;
+        syncClock(main, stickyEl);
+        syncing = false;
+      }
+    });
   }
 
   var _papersMo = null;
