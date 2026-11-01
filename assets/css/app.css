@@ -707,6 +707,123 @@ img.f { vertical-align: -0.25em; }
 .paper-end { text-align: center; padding: 10px 0 20px; }
 .paper-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
+
+/* ---------------- 真题视频讲解 / 交卷 ---------------- */
+.paper-video {
+  margin: 22px 0 16px; padding: 16px 16px 14px; border-radius: 16px;
+  border: 1px solid var(--line); background: linear-gradient(160deg, #fff, #F7F9FF 70%);
+  box-shadow: var(--shadow-sm, 0 6px 18px -14px rgba(30, 50, 100, .18));
+}
+.paper-video .pv-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px;
+}
+.paper-video .pv-head h2 { font-size: 16px; margin: 2px 0 0; letter-spacing: -.2px; }
+.paper-video .eyebrow { margin: 0; font-size: 11px; letter-spacing: 1px; color: var(--muted); font-weight: 650; }
+.pv-frame {
+  position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden;
+  background: #0b1220; border: 1px solid #D7E0F5;
+}
+.pv-frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+.pv-tip { margin: 10px 0 0; font-size: 12px; line-height: 1.6; }
+.pv-locked {
+  position: relative; min-height: 180px; border-radius: 12px; overflow: hidden;
+  background: repeating-linear-gradient(-12deg, #EEF1F7, #EEF1F7 12px, #E4E9F2 12px, #E4E9F2 24px);
+  border: 1px dashed #C5CEDF;
+}
+.pv-locked-inner {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 20px; background: rgba(250, 251, 255, .72); backdrop-filter: blur(2px);
+}
+.pv-lock-ico { font-size: 28px; margin-bottom: 6px; }
+.pv-locked-inner b { font-size: 14.5px; color: var(--ink); }
+.pv-locked-inner .muted { margin: 6px 0 0; max-width: 320px; font-size: 12.5px; line-height: 1.65; }
+.paper-submit {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
+  margin: 8px 0 18px; padding: 14px; border-radius: 14px; border: 1px solid var(--line); background: #FCFAF6;
+}
+.paper-submit.is-done { background: var(--ok-soft, #E8F7F0); border-color: #BFE9D6; }
+.paper-submit .ps-ok { font-weight: 700; color: #14795B; font-size: 14px; }
+.paper-submit .muted { font-size: 12.5px; }
+
+.paper-video.is-audio {
+  background: linear-gradient(160deg, #fff, #F3FBFA 70%);
+}
+.pv-audio {
+  padding: 12px 12px 10px;
+  border-radius: 12px;
+  background: #0F9B8E0f;
+  border: 1px solid #B7E4DE;
+}
+.pv-audio-el {
+  display: block;
+  width: 100%;
+  height: 42px;
+}
+.pv-audio-sticky {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 80;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(252, 253, 255, .96);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 24px -16px rgba(20, 40, 80, .35);
+  backdrop-filter: blur(8px);
+}
+.pv-audio-sticky-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+.pv-audio-sticky-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  color: #0F9B8E;
+  flex: 0 0 auto;
+}
+.pv-audio-sticky-el {
+  flex: 1 1 240px;
+  width: min(100%, 640px);
+  height: 36px;
+}
+.paper-video.is-audio .pv-tip { color: #3E6B66; }
+
+.paper-video .pv-head-actions {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; flex-shrink: 0;
+}
+.modal.pv-modal {
+  max-width: min(960px, 96vw);
+  width: 100%;
+  padding: 16px 18px 18px;
+  max-height: 94vh;
+  overflow: auto;
+}
+.modal.pv-modal h2 { font-size: 18px; margin: 2px 0 6px; }
+.modal.pv-modal .sub { margin: 0 0 12px; font-size: 12.5px; line-height: 1.6; }
+.pv-modal-frame {
+  position: relative; width: 100%;
+  padding-top: min(56.25%, 62vh);
+  min-height: 360px;
+  border-radius: 14px; overflow: hidden;
+  background: #0b1220; border: 1px solid #D7E0F5;
+}
+.pv-modal-frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+.pv-modal-actions {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px;
+  margin-top: 12px;
+}
+@media (max-width: 860px) {
+  .modal.pv-modal { padding: 14px; border-radius: 18px; max-height: 96vh; }
+  .pv-modal-frame { min-height: 280px; padding-top: 58%; }
+}
+
 /* ---------------- 响应式 ---------------- */
 @media (max-width: 1040px) {
   .app { grid-template-columns: 216px minmax(0, 1fr); }
